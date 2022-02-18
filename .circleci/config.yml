@@ -3,7 +3,7 @@ version: 2.1
 jobs: # a basic unit of work in a run
   display_system_info_on_runner:
     machine: true
-    resource_class: mayoct/m1mac
+    resource_class: mayoct/runner-m1mac
     steps:
       - run:
           name: Display system information
