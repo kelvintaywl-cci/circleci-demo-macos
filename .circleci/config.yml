@@ -1,6 +1,14 @@
 version: 2.1
 
 jobs: # a basic unit of work in a run
+  display_system_info_on_runner:
+    machine: true
+    resource_class: mayoct/m1mac
+    steps:
+      - run:
+          name: Display system information
+          command: system_profiler SPHardwareDataType
+      
   display_system_info:
     macos:
       xcode: 12.5.1 # indicate our selected version of Xcode
@@ -40,10 +48,11 @@ workflows:
   version: 2
   test_build:
     jobs:
-      - display_system_info
-      - test:
-          requires:
-            - display_system_info
-      - build:
-          requires:
-            - test
+      - display_system_info_on_runner
+#      - display_system_info
+#      - test:
+#          requires:
+#            - display_system_info
+#      - build:
+#          requires:
+#            - test
