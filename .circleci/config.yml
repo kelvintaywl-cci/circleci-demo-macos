@@ -44,4 +44,5 @@ workflows:
       - test
       - build:
           requires:
+            - display_system_info
             - test
