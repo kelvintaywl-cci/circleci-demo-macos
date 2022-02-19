@@ -18,22 +18,27 @@
         <key>RunAtLoad</key>
         <true/>
 
+        <!-- The agent needs to run at all times -->
         <!-- ランナーは実行状態を維持する必要があります -->
         <key>KeepAlive</key>
         <true/>
 
+        <!-- This prevents macOS from limiting the resource usage of the agent -->
         <!-- ランナーによるリソースの使用が macOS で制限されないようにする設定です-->
         <key>ProcessType</key>
         <string>Interactive</string>
 
+        <!-- Increase the frequency of restarting the agent on failure, or post-update -->
         <!-- 失敗時または更新後にランナーを再起動する頻度を増やします -->
         <key>ThrottleInterval</key>
         <integer>3</integer>
 
+        <!-- Wait for 10 minutes for the agent to shut down (the agent itself waits for tasks to complete ) -->
         <!-- ランナーがシャットダウンするまで 10 分間待機します (ランナー自体はタスクが完了するまで待機します) -->
         <key>ExitTimeOut</key>
         <integer>600</integer>
 
+        <!-- The agent uses its own logging and rotation to file -->
         <!-- ログの出力とローテーションの設定はランナー固有のものを使用します -->
         <key>StandardOutPath</key>
         <string>/dev/null</string>
