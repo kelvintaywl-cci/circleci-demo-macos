@@ -1,7 +1,11 @@
+.vscode
+checksums.txt
+launch-agent-config.yaml
+darwin
+
 .DS_Store
 .idea
 *.log
 tmp/
-
 
 build/
