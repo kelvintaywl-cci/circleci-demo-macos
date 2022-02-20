@@ -11,15 +11,6 @@ executors:
     machine: true
     resource_class: mayoct/runner-m123
 
-commands:
-  import_p12:
-    steps:
-      - run: |
-          sudo security unlock-keychain
-          echo "$P12_BASE64" > apple_distribution.p12.txt
-          base64 --decode apple_distribution.p12.txt > apple_distribution.p12
-          sudo security import apple_distribution.p12 -k /Library/Keychains/System.keychain -P $P12_PASSWORD        
-
 jobs: # a basic unit of work in a run
   display_system_info:
     parameters:
@@ -40,7 +31,6 @@ jobs: # a basic unit of work in a run
       name: <<parameters.executor_name >>
     steps: # a series of commands to run
       - checkout  # pull down code from your version control system.
-      - import_p12
       - run:
           name: Run Unit Tests
           command: xcodebuild test -scheme circleci-demo-macos
@@ -53,7 +43,6 @@ jobs: # a basic unit of work in a run
       name: <<parameters.executor_name >>
     steps: 
       - checkout
-      - import_p12
       - run:
           # build our application
           name: Build Application
