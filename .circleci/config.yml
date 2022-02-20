@@ -24,8 +24,11 @@ jobs: # a basic unit of work in a run
           command: system_profiler SPHardwareDataType
       
   test: # your job name
-    macos:
-      xcode: 12.5.1 # indicate our selected version of Xcode
+    parameters:
+      executor_name:
+        type: string
+    executor:
+      name: <<parameters.executor_name >>
     steps: # a series of commands to run
       - checkout  # pull down code from your version control system.
       - run:
@@ -33,8 +36,11 @@ jobs: # a basic unit of work in a run
           command: xcodebuild test -scheme circleci-demo-macos
 
   build: 
-    macos:
-      xcode: 12.5.1 # indicate our selected version of Xcode
+    parameters:
+      executor_name:
+        type: string
+    executor:
+      name: <<parameters.executor_name >>
     steps: 
       - checkout
       - run:
@@ -56,16 +62,41 @@ workflows:
       - display_system_info:
           name: 'Display Info on macOS on Cloud'
           executor_name: macos-on-cloud
+      - test:
+          name: 'Test on macOS on Cloud'
+          executor_name: macos-on-cloud
+          requires:
+            - display_system_info
+      - build:
+          name: 'Build on macOS on Cloud'
+          executor_name: macos-on-cloud
+          requires:
+            - test
+
       - display_system_info:
-          name: 'Display Info on macOS 12.2 on Runner'
+          name: 'Display Info on macOS on macOS 12.2 on Runner'
           executor_name: macos122-on-runner
+      - test:
+          name: 'Test Info on macOS on macOS 12.2 on Runner'
+          executor_name: macos122-on-runner
+          requires:
+            - display_system_info
+      - build:
+          name: 'Build Info on macOS on macOS 12.2 on Runner'
+          executor_name: macos122-on-runner
+          requires:
+            - test
+
       - display_system_info:
-          name: 'Display Info on macOS 12.3 beta on Runner'
+          name: 'Display Info on macOS on macOS 12.3 beta on Runner'
           executor_name: macos123-on-runner
-#      - display_system_info
-#      - test:
-#          requires:
-#            - display_system_info
-#      - build:
-#          requires:
-#            - test
+      - test:
+          name: 'Test Info on macOS on macOS 12.3 beta on Runner'
+          executor_name: macos123-on-runner
+          requires:
+            - display_system_info
+      - build:
+          name: 'Build Info on macOS on macOS 12.3 beta on Runner'
+          executor_name: macos123-on-runner
+          requires:
+            - test
