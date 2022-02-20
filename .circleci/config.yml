@@ -1,23 +1,28 @@
 version: 2.1
 
-jobs: # a basic unit of work in a run
-  display_system_info_on_runner:
+executors:
+  macos-on-cloud:
+    macos:
+      xcode: 12.5.1
+  macos122-on-runner:
     machine: true
-    resource_class: mayoct/runner-m1mac
+    resource_class: mayoct/runner-m122
+  macos123-on-runner:
+    machine: true
+    resource_class: mayoct/runner-m123
+
+jobs: # a basic unit of work in a run
+  display_system_info:
+    parameters:
+      executor_name:
+        type: string
+    executor:
+      name: <<parameters.executor_name >>
     steps:
       - run:
           name: Display system information
           command: system_profiler SPHardwareDataType
       
-  display_system_info:
-    macos:
-      xcode: 12.5.1 # indicate our selected version of Xcode
-    steps: # a series of commands to run
-      - checkout  # pull down code from your version control system.
-      - run:
-          name: Display system information
-          command: system_profiler SPHardwareDataType
-
   test: # your job name
     macos:
       xcode: 12.5.1 # indicate our selected version of Xcode
@@ -48,7 +53,12 @@ workflows:
   version: 2
   test_build:
     jobs:
-      - display_system_info_on_runner
+      - display_cloud_system_info:
+          executor_name: "macos_on_cloud"
+      - display_runner_m122_system_info:
+          executor_name: "macos122_on_runner"
+      - display_runner_m123_system_info:
+          executor_name: "macos123_on_runner"
 #      - display_system_info
 #      - test:
 #          requires:
