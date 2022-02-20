@@ -60,43 +60,43 @@ workflows:
   test_build:
     jobs:
       - display_system_info:
-          name: 'Display Info on macOS on Cloud'
+          name: display_system_info_on_macos_on_cloud
           executor_name: macos-on-cloud
       - test:
-          name: 'Test on macOS on Cloud'
+          name: test_on_macos_on_cloud
           executor_name: macos-on-cloud
           requires:
-            - display_system_info
+            - display_system_info_on_macos_on_cloud
       - build:
-          name: 'Build on macOS on Cloud'
-          executor_name: macos-on-cloud
+          name: build_on_macos_on_cloud
+          executor_name: build_on_macos_on_cloud
           requires:
-            - test
+            - test_on_macos_on_cloud
 
       - display_system_info:
-          name: 'Display Info on macOS on macOS 12.2 on Runner'
+          name: display_system_info_on_macos_122_on_runner
           executor_name: macos122-on-runner
       - test:
-          name: 'Test Info on macOS on macOS 12.2 on Runner'
+          name: test_on_macos122_on_runner
           executor_name: macos122-on-runner
           requires:
-            - display_system_info
+            - display_system_info_on_macos_122_on_runner
       - build:
-          name: 'Build Info on macOS on macOS 12.2 on Runner'
+          name: build_on_macos122_on_runner
           executor_name: macos122-on-runner
           requires:
-            - test
+            - test_on_macos122_on_runner
 
       - display_system_info:
-          name: 'Display Info on macOS on macOS 12.3 beta on Runner'
+          name: display_system_info_on_macos_123_on_runner
           executor_name: macos123-on-runner
       - test:
-          name: 'Test Info on macOS on macOS 12.3 beta on Runner'
+          name: test_on_macos123_on_runner
           executor_name: macos123-on-runner
           requires:
-            - display_system_info
+            - display_system_info_on_macos_123_on_runner
       - build:
-          name: 'Build Info on macOS on macOS 12.3 beta on Runner'
+          name: build_on_macos123_on_runner
           executor_name: macos123-on-runner
           requires:
-            - test
+            - test_on_macos123_on_runner
