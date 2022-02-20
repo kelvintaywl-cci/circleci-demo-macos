@@ -53,11 +53,14 @@ workflows:
   version: 2
   test_build:
     jobs:
-      - display_system_info_on_cloud:
+      - display_system_info:
+          name: 'Display Info on macOS on Cloud'
           executor_name: macos-on-cloud
-      - display_system_info_on_macos122_runner:
+      - display_system_info:
+          name: 'Display Info on macOS 12.2 on Runner'
           executor_name: macos122-on-runner
-      - display_system_info_on_macos123_runner:
+      - display_system_info:
+          name: 'Display Info on macOS 12.3 beta on Runner'
           executor_name: macos123-on-runner
 #      - display_system_info
 #      - test:
