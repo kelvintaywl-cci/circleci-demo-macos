@@ -53,11 +53,11 @@ workflows:
   version: 2
   test_build:
     jobs:
-      - display_cloud_system_info:
+      - display_system_info:
           executor_name: "macos_on_cloud"
-      - display_runner_m122_system_info:
+      - display_system_info:
           executor_name: "macos122_on_runner"
-      - display_runner_m123_system_info:
+      - display_system_info:
           executor_name: "macos123_on_runner"
 #      - display_system_info
 #      - test:
