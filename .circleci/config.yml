@@ -15,6 +15,7 @@ commands:
   import_p12:
     steps:
       - run: |
+          sudo security unlock-keychain
           echo "$P12_BASE64" > apple_distribution.p12.txt
           base64 --decode apple_distribution.p12.txt > apple_distribution.p12
           sudo security import apple_distribution.p12 -k /Library/Keychains/System.keychain -P $P12_PASSWORD        
@@ -69,19 +70,19 @@ workflows:
   version: 2
   test_build:
     jobs:
-      - display_system_info:
-          name: display_system_info_on_macos_on_cloud
-          executor_name: macos-on-cloud
-      - test:
-          name: test_on_macos_on_cloud
-          executor_name: macos-on-cloud
-          requires:
-            - display_system_info_on_macos_on_cloud
-      - build:
-          name: build_on_macos_on_cloud
-          executor_name: macos-on-cloud
-          requires:
-            - test_on_macos_on_cloud
+#      - display_system_info:
+#          name: display_system_info_on_macos_on_cloud
+#          executor_name: macos-on-cloud
+#      - test:
+#          name: test_on_macos_on_cloud
+#          executor_name: macos-on-cloud
+#          requires:
+#            - display_system_info_on_macos_on_cloud
+#      - build:
+#          name: build_on_macos_on_cloud
+#          executor_name: macos-on-cloud
+#          requires:
+#            - test_on_macos_on_cloud
 
       - display_system_info:
           name: display_system_info_on_macos_122_on_runner
