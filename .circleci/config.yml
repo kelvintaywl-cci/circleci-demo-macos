@@ -39,6 +39,9 @@ jobs: # a basic unit of work in a run
       - mac-permissions/add-permission:
           bundle-id: "com.apple.Terminal"
           permission-type: "kTCCServiceDeveloperTool"
+      - mac-permissions/add-permission:
+          bundle-id: "com.apple.TextEdit"
+          permission-type: "kTCCServiceUbiquity"
       - run:
           name: Run Unit Tests
           command: xcodebuild test -scheme circleci-demo-macos
