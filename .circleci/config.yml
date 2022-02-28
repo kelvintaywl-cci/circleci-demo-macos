@@ -36,10 +36,12 @@ jobs: # a basic unit of work in a run
     steps: # a series of commands to run
       - checkout  # pull down code from your version control system.
       - mac-permissions/add-uitest-permissions
-
+      - mac-permissions/add-permission:
+          bundle-id: "com.apple.Terminal"
+          permission-type: "kTCCServiceDeveloperTool"
       - run:
           name: Run Unit Tests
-          command: xcodebuild test -scheme circleci-demo-macos "ARCHS=x86_64"
+          command: xcodebuild test -scheme circleci-demo-macos
 
   build: 
     parameters:
