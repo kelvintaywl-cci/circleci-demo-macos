@@ -87,30 +87,30 @@ workflows:
 #          requires:
 #            - test_on_macos_on_cloud
 
-      - display_system_info:
-          name: display_system_info_on_macos_122_on_runner
-          executor_name: macos122-on-runner
-      - test:
-          name: test_on_macos122_on_runner
-          executor_name: macos122-on-runner
-          requires:
-            - display_system_info_on_macos_122_on_runner
-      - build:
-          name: build_on_macos122_on_runner
-          executor_name: macos122-on-runner
-          requires:
-            - test_on_macos122_on_runner
-
 #      - display_system_info:
-#          name: display_system_info_on_macos_123_on_runner
-#          executor_name: macos123-on-runner
+#          name: display_system_info_on_macos_122_on_runner
+#          executor_name: macos122-on-runner
 #      - test:
-#          name: test_on_macos123_on_runner
-#          executor_name: macos123-on-runner
+#          name: test_on_macos122_on_runner
+#          executor_name: macos122-on-runner
 #          requires:
-#            - display_system_info_on_macos_123_on_runner
+#            - display_system_info_on_macos_122_on_runner
 #      - build:
-#          name: build_on_macos123_on_runner
-#          executor_name: macos123-on-runner
+#          name: build_on_macos122_on_runner
+#          executor_name: macos122-on-runner
 #          requires:
-#            - test_on_macos123_on_runner
+#            - test_on_macos122_on_runner
+
+      - display_system_info:
+          name: display_system_info_on_macos_123_on_runner
+          executor_name: macos123-on-runner
+      - test:
+          name: test_on_macos123_on_runner
+          executor_name: macos123-on-runner
+          requires:
+            - display_system_info_on_macos_123_on_runner
+      - build:
+          name: build_on_macos123_on_runner
+          executor_name: macos123-on-runner
+          requires:
+            - test_on_macos123_on_runner
