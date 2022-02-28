@@ -36,8 +36,6 @@ jobs: # a basic unit of work in a run
     steps: # a series of commands to run
       - checkout  # pull down code from your version control system.
       - mac-permissions/add-uitest-permissions
-      - mac-permissions/add-safari-permissions
-      - mac-permissions/add-voiceover-permissions
 
       - run:
           name: Run Unit Tests
