@@ -44,7 +44,7 @@ jobs: # a basic unit of work in a run
           permission-type: "kTCCServiceUbiquity"
       - run:
           name: Run Unit Tests
-          command: xcodebuild test -scheme circleci-demo-macos
+          command: xcodebuild test -scheme circleci-demo-macos -destination 'platform=OS X,arch=x86_64'
 
   build: 
     parameters:
