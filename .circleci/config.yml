@@ -47,7 +47,7 @@ jobs: # a basic unit of work in a run
           permission-type: "kTCCServiceAccessibility"
       - run:
           name: Run Unit Tests
-          command: xcodebuild test -v -scheme circleci-demo-macos
+          command: xcodebuild test -verbose -scheme circleci-demo-macos
 
   build: 
     parameters:
