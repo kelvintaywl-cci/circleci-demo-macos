@@ -1,60 +1,27 @@
 version: 2.1
 
-orbs:
-  mac-permissions: circleci/macos@2.1.0
-
-executors:
-  macos-on-cloud:
-    macos:
-      xcode: 12.5.1
-  macos122-on-runner:
-    machine: true
-    resource_class: mayoct/runner-m122
-  macos123-on-runner:
-    machine: true
-    resource_class: mayoct/runner-m123
-
 jobs: # a basic unit of work in a run
   display_system_info:
-    parameters:
-      executor_name:
-        type: string
-    executor:
-      name: <<parameters.executor_name >>
-    steps:
+    macos:
+      xcode: 12.5.1 # indicate our selected version of Xcode
+    steps: # a series of commands to run
+      - checkout  # pull down code from your version control system.
       - run:
           name: Display system information
           command: system_profiler SPHardwareDataType
-      - mac-permissions/list-permissions
-      
+
   test: # your job name
-    parameters:
-      executor_name:
-        type: string
-    executor:
-      name: <<parameters.executor_name >>
+    macos:
+      xcode: 12.5.1 # indicate our selected version of Xcode
     steps: # a series of commands to run
       - checkout  # pull down code from your version control system.
-      - mac-permissions/add-uitest-permissions
-      - mac-permissions/add-permission:
-          bundle-id: "com.apple.Terminal"
-          permission-type: "kTCCServiceDeveloperTool"
-      - mac-permissions/add-permission:
-          bundle-id: "com.apple.TextEdit"
-          permission-type: "kTCCServiceUbiquity"
-      - mac-permissions/add-permission:
-          bundle-id: "com.apple.dt.Xcode-Helper"
-          permission-type: "kTCCServiceAccessibility"
       - run:
           name: Run Unit Tests
-          command: xcodebuild test -verbose -scheme circleci-demo-macos
+          command: xcodebuild test -scheme circleci-demo-macos
 
   build: 
-    parameters:
-      executor_name:
-        type: string
-    executor:
-      name: <<parameters.executor_name >>
+    macos:
+      xcode: 12.5.1 # indicate our selected version of Xcode
     steps: 
       - checkout
       - run:
@@ -73,44 +40,10 @@ workflows:
   version: 2
   test_build:
     jobs:
-#      - display_system_info:
-#          name: display_system_info_on_macos_on_cloud
-#          executor_name: macos-on-cloud
-#      - test:
-#          name: test_on_macos_on_cloud
-#          executor_name: macos-on-cloud
-#          requires:
-#            - display_system_info_on_macos_on_cloud
-#      - build:
-#          name: build_on_macos_on_cloud
-#          executor_name: macos-on-cloud
-#          requires:
-#            - test_on_macos_on_cloud
-
-#      - display_system_info:
-#          name: display_system_info_on_macos_122_on_runner
-#          executor_name: macos122-on-runner
-#      - test:
-#          name: test_on_macos122_on_runner
-#          executor_name: macos122-on-runner
-#          requires:
-#            - display_system_info_on_macos_122_on_runner
-#      - build:
-#          name: build_on_macos122_on_runner
-#          executor_name: macos122-on-runner
-#          requires:
-#            - test_on_macos122_on_runner
-
-      - display_system_info:
-          name: display_system_info_on_macos_123_on_runner
-          executor_name: macos123-on-runner
+      - display_system_info
       - test:
-          name: test_on_macos123_on_runner
-          executor_name: macos123-on-runner
           requires:
-            - display_system_info_on_macos_123_on_runner
+            - display_system_info
       - build:
-          name: build_on_macos123_on_runner
-          executor_name: macos123-on-runner
           requires:
-            - test_on_macos123_on_runner
+            - test
